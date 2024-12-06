@@ -6,6 +6,7 @@ const data = fs.readFileSync(`./5/${input}.txt`, 'utf8')
 
 const [orders,pagesString] = data.split('\n\n')
 
+
 const pairs = orders.split('\n').map(o => o.split('|').map(p => parseInt(p)))
 const updates = pagesString.split('\n').map(u => u.split(',').map(u => parseInt(u)))
 
