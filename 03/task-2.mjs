@@ -9,7 +9,7 @@ let enabled = true;
 
 const matches = data.match(/mul\([0-9]+,[0-9]+\)|do\(\)|don't\(\)/g);
 
-matches.forEach(m => {
+matches.forEach((m) => {
   if (m.startsWith('mul')) {
     if (enabled) {
       const [_, a, b] = m.match(/mul\((\d+),(\d+)\)/);
@@ -17,7 +17,7 @@ matches.forEach(m => {
     }
   } else if (m === 'do()') {
     enabled = true;
-  } else if (m === 'don\'t()') {
+  } else if (m === "don't()") {
     enabled = false;
   }
 });
