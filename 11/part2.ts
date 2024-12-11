@@ -10,39 +10,40 @@ const stones: number[] = data
 
 // console.log(stones);
 // const blinks = 25; // part1
-const blinks = 45;
-// const blinks = 75; // part2
+// const blinks = 45;
+const blinks = 75; // part2
 
+const cache = new Map();
 let stoneCount = 0;
-
-let i = 1;
 for (const stone of stones) {
-  blink(stone, 1);
-  console.log('#################### passed stone', i, stones.length);
-  i++;
+  stoneCount += blink(stone);
 }
 
 console.log('Stone count:', stoneCount);
 // 11 259 883
 // 1174000000
-function blink(stone: number, level: number) {
-  let children: number[];
+function blink(stone: number, level = 0) {
+  const key = `${level}:${stone}`;
+  if (cache.has(key)) {
+    return cache.get(key);
+  }
+  if (level === blinks) {
+    return 1;
+  }
 
+  let count = 0;
+  level += 1;
   if (stone === 0) {
-    children = [1];
+    count += blink(1, level);
   } else if (`${stone}`.length % 2 === 0) {
     const s = `${stone}`;
     const half = s.length / 2;
-    children = [parseInt(s.slice(0, half)), parseInt(s.slice(half))];
+    count += blink(parseInt(s.slice(0, half)), level);
+    count += blink(parseInt(s.slice(half)), level);
   } else {
-    children = [stone * 2024];
+    count += blink(stone * 2024, level);
   }
-  if (level === blinks) {
-    stoneCount += children.length;
-    return;
-  }
-  const newLevel = level + 1;
-  for (const cn of children) {
-    blink(cn, newLevel);
-  }
+
+  cache.set(key, count);
+  return count;
 }
