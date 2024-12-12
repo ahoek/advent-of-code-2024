@@ -19,7 +19,7 @@ for (const stone of stones) {
   stoneCount += blink(stone);
 }
 
-console.log('Stone count:', stoneCount);
+console.log('Stone count:', stoneCount, cache.size);
 // 11 259 883
 // 1174000000
 function blink(stone: number, level = 0) {
