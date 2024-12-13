@@ -24,10 +24,9 @@ const machines: Machine[] = data
     prize: getVector(m[2]),
   }));
 const offset = 10000000000000;
-// const offset = 0;
+// const offset = 0; // part 1
 let totalTokens = 0;
 for (const m of machines) {
-  console.log('####');
   const prize = { x: m.prize.x + offset, y: m.prize.y + offset };
   const A = m.A;
   const B = m.B;
@@ -36,23 +35,19 @@ for (const m of machines) {
   // a * A.x + b * B.x = price.x
   // a * A.y + b * B.y = price.y
   // https://www.khanacademy.org/test-prep/v2-sat-math/x0fcc98a58ba3bea7:algebra-easier/x0fcc98a58ba3bea7:solving-systems-of-linear-equations-easier/a/v2-sat-lesson-solving-systems-of-linear-equations
-
   const b = (prize.y * A.x - A.y * prize.x) / (-(B.x * A.y) + B.y * A.x);
   const a = (prize.x - B.x * b) / A.x;
 
   // Check if solutions are whole numbers
-  if (a !== Math.floor(a) || b !== Math.floor(b)) {
+  if (a !== Math.round(a) || b !== Math.round(b)) {
     continue;
   }
 
-  if (A.x * a + B.x * b === prize.x && A.y * a + B.y * b === prize.y) {
-    totalTokens += a * 3 + b;
-    console.log('prize got for', a, b);
-  }
+  totalTokens += a * 3 + b;
+  // console.log('prize got for', a, b);
 }
 
 console.log({ totalTokens });
-// 875318608908 too low
 
 function getVector(descr: string): Vector {
   const coords = descr.replace(/[^\d,]/g, '');
