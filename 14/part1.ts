@@ -84,7 +84,7 @@ function testPlot(robots: Vector[]): string {
   return map.map((m) => m.join('')).join('\n');
 }
 
-function move(robot: Robot, time: number): Vectos {
+function move(robot: Robot, time: number): Vector {
   const distance = mul(time, robot.v);
   const virtPos = add(robot.p, distance);
   const pos = bound(virtPos);
